@@ -1,0 +1,56 @@
+<button class="btn btn-success" (click)="lgModal.show()">Ver detalle</button>
+
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Detalle de {{ pedido.cliente.nombreCompleto }} - {{ pedido.fecha | date: 'dd/MM/yyyy' }} </h4>
+        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <table class="table table-striped mt-2" [mfData]="pedido.listaDetalle" #mf="mfDataTable" [mfRowsOnPage]="5">
+          <thead>
+            <tr>
+              <th style="width: 50px">
+                #
+              </th>
+              <th>
+                Plato
+              </th>
+              <th>
+                Precio
+              </th>
+              <th>
+                Cantidad
+              </th>
+              <th>
+                Total
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of mf.data; let i = index">
+              <td>{{ i+1 }}</td>
+              <td>{{ d.plato.nombre }}</td>
+              <td>{{ d.plato.precio | currency : 'S/ ' }}</td>
+              <td>{{ d.cantidad }}</td>
+              <td>{{ d.plato.precio * d.cantidad | currency : 'S/ ' }}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5">
+                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,20]"></mfBootstrapPaginator>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      
+        <button type="button" class="btn btn-danger" (click)="lgModal.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-12">
+    <form [formGroup]="form" (ngSubmit)="operar()">
+
+      <input type="hidden" id="id" name="id" formControlName="id">
+    
+      <div class="row">
+        <div class="col-12">
+          <label for="nombre">Nombre</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" formControlName="nombre">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <label for="urlImagen">URL Imagen</label>
+          <input type="text" class="form-control" id="urlImagen" name="urlImagen" formControlName="urlImagen" #imagen>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <img [src]="imagen.value" width="300" height="200">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <label for="precio">Precio</label>
+          <input type="text" class="form-control" id="precio" name="precio" formControlName="precio">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button class="btn btn-success" type="submit">Aceptar</button>
+          <button type="button" class="btn btn-danger" routerLink="/plato">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

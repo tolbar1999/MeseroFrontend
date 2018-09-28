@@ -1,0 +1,49 @@
+<div>
+  <tabset>
+    <tab heading="Fecha unica">
+      <app-date-picker [opcion]="'U'" (emisionFechaUnica)="buscarFechaUnica($event)"></app-date-picker>
+    </tab>
+    <tab heading="Rango de fechas">
+      <app-date-picker [opcion]="'M'" (emisionFechaRango)="buscarFechaRango($event)"></app-date-picker>
+    </tab>
+  </tabset>
+
+  <table class="table table-striped mt-2" [mfData]="pedidos" #mf="mfDataTable" [mfRowsOnPage]="10">
+    <thead>
+      <tr>
+        <th style="width: 50px">
+          #
+        </th>
+        <th>
+          Cliente
+        </th>
+        <th>
+          Fecha
+        </th>
+        <th>
+          Total
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of mf.data; let i = index">
+        <td>{{ i+1 }}</td>
+        <td>{{ p.cliente.nombreCompleto | uppercase }}</td>
+        <td>{{ p.fecha | date: 'dd/MM/yyyy'}}</td>
+        <td>{{ p.total | currency : 'S/ ' }}</td>
+        <td>
+          <app-simple-modal [pedido]="p"></app-simple-modal>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4">
+          <mfBootstrapPaginator [rowsOnPageSet]="[10,15,20]"></mfBootstrapPaginator>
+          <div class="alert alert-info" *ngIf="pedidos.length == 0">No se han encontrado pedidos</div>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  
+</div>

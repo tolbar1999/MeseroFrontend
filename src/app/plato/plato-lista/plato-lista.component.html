@@ -1,0 +1,36 @@
+<button class="btn btn-success mb-1" (click)="crearNuevoPlato()" >Nuevo Plato</button>
+
+<table class="table table-striped" [mfData]="platos | platoFiltro : filtrarConsulta" #mf="mfDataTable" [mfRowsOnPage]="5">
+    <thead>
+        <tr>
+            <th colspan="3">
+                <input class="form-control" [(ngModel)]="filtrarConsulta" placeholder="Buscar en esta lista" > 
+            </th>
+        </tr>
+        <tr>
+            <th style="width: 20%">
+                <mfDefaultSorter by="name">#</mfDefaultSorter>
+            </th>
+            <th style="width: 50%">
+                <mfDefaultSorter by="email">Nombre</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+                <mfDefaultSorter by="city">Precio</mfDefaultSorter>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of mf.data; let i = index" [routerLink]="[p.id]" routerLinkActive="active" >
+            <td>{{i+1}}</td>
+            <td>{{p.nombre}}</td>
+            <td>{{p.precio}}</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+        </tr>
+    </tfoot>
+</table>

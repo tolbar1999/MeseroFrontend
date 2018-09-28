@@ -1,0 +1,9 @@
+<form class="form-signin">
+  <h1 class="h3 mb-3 font-weight-normal text-center">Iniciar sesion</h1>
+  <input type="text" class="form-control" placeholder="Usuario" name="usuario" [(ngModel)]="usuario">
+  <input type="password" class="form-control" placeholder="Contraseña" name="clave" [(ngModel)]="clave">
+  <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="iniciarSesion()">Entrar</button>
+  <div class="alert alert-danger mt-2" *ngIf="mensaje">
+    El usuario y/o contraseña esta incorrecto
+  </div>
+</form>

@@ -1,0 +1,102 @@
+<form>
+  <div class="row">
+    <div class="col-sm-12 form-group">
+      <label for="cliente">Cliente</label>
+      <ng2-completer [autofocus]="true" [datasource]="dataSourceCliente" (selected)="seleccionarCliente($event)"
+        [textSearching]="'Buscando...'" [placeholder]="'Ingrese el nombre o la identificacion del cliente'" [textNoResults]="'Sin resultados'"
+        [pause]="500" [minSearchLength]="1" [inputClass]="'form-control'" name="cliente"></ng2-completer>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-5 form-group">
+      <label for="plato">Plato</label>
+      <ng2-completer [datasource]="dataSourcePlato" (selected)="seleccionarPlato($event)" [textSearching]="'Buscando...'"
+        [placeholder]="'Ingrese el nombre del plato'" [textNoResults]="'Sin resultados'" [pause]="500" [minSearchLength]="1"
+        [inputClass]="'form-control'" name="plato"></ng2-completer>
+    </div>
+    <div class="col-sm-2 form-group">
+      <label for="cantidad">Cantidad</label>
+      <input type="number" class="form-control" id="cantidad" name="cantidad" [(ngModel)]="cantidad">
+    </div>
+  </div>
+  <div class="row" *ngIf="alertaFormulario">
+    <div class="col-sm-10">
+      <div class="alert alert-warning">
+        <strong>Debe completar todo el formulario!</strong>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-10">
+      <button type="submit" class="btn btn-primary" (click)="agregarPlato()">Agregar</button>
+      <h4 class="float-right">
+        <span class="badge badge-pill badge-secondary">Total: {{total | currency: '$/ '}}</span>
+      </h4>
+    </div>
+  </div>
+  <div class="row mt-1" *ngIf="alertaRegistro">
+    <div class="col-sm-10">
+      <div class="alert alert-success">
+        <strong>Se ha enviado el pedido correctamente!!</strong>
+      </div>
+    </div>
+  </div>
+</form>
+
+<br>
+<br>
+<br>
+
+<table class="table table-striped" [mfData]="detalle" #mf="mfDataTable" [mfRowsOnPage]="5" *ngIf="detalle.length > 0">
+  <thead>
+    <tr>
+      <th colspan="2">
+        <input class="form-control" [(ngModel)]="filtrarConsulta" placeholder="Buscar en esta lista">
+      </th>
+    </tr>
+    <tr>
+      <th style="width: 50px">
+        <mfDefaultSorter by="name">#</mfDefaultSorter>
+      </th>
+      <th>
+        <mfDefaultSorter by="email">Plato</mfDefaultSorter>
+      </th>
+      <th>
+        <mfDefaultSorter by="city">Precio</mfDefaultSorter>
+      </th>
+      <th>
+        <mfDefaultSorter by="city">Cantidad</mfDefaultSorter>
+      </th>
+      <th>
+        Total
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let d of mf.data; let i = index">
+      <td>{{ i+1 }}</td>
+      <td>{{ d.plato.nombre }}</td>
+      <td>{{ d.plato.precio | currency : '$/ ' }}</td>
+      <td>{{ d.cantidad }}</td>
+      <td>{{ d.plato.precio * d.cantidad | currency : '$/ ' }} </td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="remover(d.index)">Remover</button>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="4">
+        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <app-confirmar-modal [claseBoton]="'btn btn-primary'" [nombreBoton]="'Enviar pedido'" [titulo]="'Esta seguro que desea enviar el pedido?'" (estaConfirmado)="respuestaEnviarPedido($event)" ></app-confirmar-modal>
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="limpiar()">Limpiar</button>
+      </td>
+    </tr>
+  </tfoot>
+</table>

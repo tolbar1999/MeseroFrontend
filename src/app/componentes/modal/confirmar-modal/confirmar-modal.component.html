@@ -1,0 +1,14 @@
+<button type="button" [ngClass]="claseBoton" (click)="openModal(template)"> {{nombreBoton}} </button>
+ 
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"> {{titulo}} </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <button type="button" class="btn btn-primary" (click)="confirmar()">Confirmar</button>
+    <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+  </div>
+</ng-template>
