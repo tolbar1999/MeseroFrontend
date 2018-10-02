@@ -1,9 +1,24 @@
 <form class="form-signin">
-  <h1 class="h3 mb-3 font-weight-normal text-center">Iniciar sesion</h1>
-  <input type="text" class="form-control" placeholder="Usuario" name="usuario" [(ngModel)]="usuario">
-  <input type="password" class="form-control" placeholder="Contraseña" name="clave" [(ngModel)]="clave">
-  <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="iniciarSesion()">Entrar</button>
-  <div class="alert alert-danger mt-2" *ngIf="mensaje">
-    El usuario y/o contraseña esta incorrecto
+  <div *ngIf="mostrar">
+    <h3 class="mb-3 font-weight-normal text-center">Iniciar sesion</h3>
+    <input type="text" class="form-control" placeholder="Usuario" name="usuario" [(ngModel)]="usuario">
+    <input type="password" class="form-control" placeholder="Contraseña" name="clave" [(ngModel)]="clave">
+    <button class="btn btn-primary btn-block" type="submit" (click)="iniciarSesion()">Entrar</button>
+    <button class="btn btn-secondary btn-block" type="button" (click)="cambiarMostrar()">Restablecer contraseña</button>
+    <div class="alert alert-danger mt-2" *ngIf="mensaje">
+      El usuario y/o contraseña esta incorrecto
+    </div>
+  </div>
+  <div *ngIf="!mostrar">
+      <h3 class="mb-3 font-weight-normal text-center">Restablecer contraseña</h3>
+      <input type="text" class="form-control" placeholder="Escriba su usuario" name="usuarioRestablecer" [(ngModel)]="usuarioRestablecer">
+      <button class="btn btn-success btn-block mt-2" type="button" (click)="confirmar()">Confirmar</button>
+      <button class="btn btn-secondary btn-block mt-2" type="button" (click)="cambiarMostrar()">Volver</button>
+      <div class="alert alert-danger mt-2" *ngIf="mensajeErrorRestablecer">
+        El usuario no existe
+      </div>
+      <div class="alert alert-success mt-2" *ngIf="mensajeExitoRestablecer">
+        Se ha restablecido correctamente la contraseña, por favor revisa tu correo electronico
+      </div>
   </div>
 </form>

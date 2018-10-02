@@ -42,4 +42,12 @@ export class LoginService {
     return usuario;
   }
 
+  existeUsuario(usuario: string){
+    return this.http.get(HOST+"/usuario/existeUsuario?usuario="+usuario);
+  }
+
+  restablecerClave(usuario: string){
+    return this.http.post(HOST+"/usuario/restablecerClave?usuario="+usuario,{});
+  }
+
 }

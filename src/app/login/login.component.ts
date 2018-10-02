@@ -12,7 +12,11 @@ export class LoginComponent implements OnInit {
 
   usuario: string;
   clave: string;
-  mensaje: boolean;
+  mensaje: boolean = false;
+  mostrar: boolean = true;
+  mensajeErrorRestablecer: boolean = false;
+  mensajeExitoRestablecer: boolean = false;
+  usuarioRestablecer: string = "";
 
   constructor(private servicioLogin: LoginService, private router: Router) { }
 
@@ -31,6 +35,24 @@ export class LoginComponent implements OnInit {
     }, error => {
       this.mensaje = true;
     })
+  }
+
+
+  confirmar(){
+    this.servicioLogin.existeUsuario(this.usuarioRestablecer).subscribe(data =>{
+      if(data){
+        this.mensajeErrorRestablecer = false;
+        this.servicioLogin.restablecerClave(this.usuarioRestablecer).subscribe(data =>{
+          this.mensajeExitoRestablecer = true;
+        });
+      }else{
+        this.mensajeErrorRestablecer = true;
+      }
+    });
+  }
+
+  cambiarMostrar() {
+    this.mostrar = !this.mostrar;
   }
 
 }
